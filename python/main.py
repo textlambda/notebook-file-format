@@ -42,6 +42,7 @@ def get_entries(connection, ekey):
     sql = """
     SELECT
       id,
+      parent_id,
       encrypted_name,
       encrypted_value,
       deleted,
@@ -55,6 +56,7 @@ def get_entries(connection, ekey):
         value = cipher.decrypt(ekey, x['encrypted_value']).decode() if x['encrypted_value'] else None
 
         yield dict(id=x['id'],
+                   parent_id=x['parent_id'],
                    name=name,
                    value=value,
                    deleted=x['deleted'] == 1,
